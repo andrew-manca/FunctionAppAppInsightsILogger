@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using FunctionApp4;
@@ -27,9 +28,20 @@ namespace MyNamespace
 
             Logging.logStuff();
 
+
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string name = req.Query["name"];
+
+            log.LogInformation(new EventId((int)LoggingConstants.EventId.SubmissionSucceeded),
+                           LoggingConstants.Template,
+                           LoggingConstants.EventId.SubmissionSucceeded.ToString(),
+                           LoggingConstants.EntityType.Order.ToString(),
+                           name,
+                           LoggingConstants.Status.Succeeded.ToString(),
+                           Guid.NewGuid().ToString(),
+                           LoggingConstants.CheckPoint.Publisher.ToString(),
+                           "");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);

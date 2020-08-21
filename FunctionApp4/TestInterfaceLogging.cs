@@ -17,6 +17,15 @@ namespace FunctionApp4
         public void logStuff()
         {
             Logging.LogInformation("Information");
+            Logging.LogInformation(new EventId((int)LoggingConstants.EventId.SubmissionSucceeded),
+                          LoggingConstants.Template,
+                          LoggingConstants.EventId.SubmissionSucceeded.ToString(),
+                          LoggingConstants.EntityType.Order.ToString(),
+                          "Other Class",
+                          LoggingConstants.Status.Succeeded.ToString(),
+                          Guid.NewGuid().ToString(),
+                          LoggingConstants.CheckPoint.Publisher.ToString(),
+                          "");
             Logging.LogDebug("Debug");
             Logging.LogError("Error");
         }
